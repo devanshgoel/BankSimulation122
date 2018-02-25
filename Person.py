@@ -7,7 +7,7 @@ class Person:
         """
         Summary line.
         Initializing the variables.
-        
+
         Parameters
         ----------
         name: str
@@ -19,37 +19,37 @@ class Person:
             phonenumber of the person
         address: str
             address of the person
-            
+
         Returns
         -------
         Doesn't return anything
-        
+
         """
         self.name = name
         self.birthdate = birthdate
         self.phonenumber = phonenumber
         self.address = address
-        
+
     def getInfo(self):
         """
         Summary line.
         It is an abstract method that returns the info of the person.
         """
         raise NotImplementedError("Subclass must implement abstract method")
-        
+
     def getAge(self):
         """
         Summary line.
         takes birthdate and returns age based off of current datetime
-        
+
         Parameters
         ----------
-            
+
         Returns
         -------
         int
             age of the person
-        
+
         """
         today=datetime.date.today()
         month, day, year = self.birthdate.split("/")
@@ -57,4 +57,4 @@ class Person:
         if (today.month, today.day) < (int(month), int(day)):
             age -=1
         return age
-    
+
