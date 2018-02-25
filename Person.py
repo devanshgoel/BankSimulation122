@@ -2,6 +2,7 @@ import datetime
 
 
 class Person:
+    """ Abstract person class for defining similarity between both employees and customers """
     def __init__(self, name, birthdate, phonenumber, address):
         """
         Summary line.
