@@ -1,0 +1,40 @@
+HW4 Outline
+
+Person Class:
+	- name 
+
+	Teller Class
+		-salary
+	~methods
+		- help customer
+		- access limited customer info
+
+	Manager Class
+		- salary 
+	~methods
+		- delete customer account
+		- access detailed customer info
+
+	Customer Class
+		-D.O.B
+		-SSN
+		-address
+	~methods
+		- open various accounts
+		- ask for loan
+		- make monthly payments
+
+><><><><><><><><><><><><><><><><><><><><><><><><
+
+Bank Account Class:
+	- Customer object
+	- balance
+~methods
+	- withdraw
+	- deposit
+
+	Checking Class:
+		- fee
+
+	Savings Class:
+		- interest rate
