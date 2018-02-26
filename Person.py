@@ -27,7 +27,7 @@ class Person:
         """
         self.name = name
         self.birthdate = birthdate
-        self.phonenumber = phonenumber
+        self.phoneNumber = phonenumber
         self.address = address
 
     def getInfo(self):
