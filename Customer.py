@@ -44,3 +44,23 @@ class Customer(Person):
         Does NOT return balances - see getBalance()
         """
         return "Name: {}\nBirthdate: {}\nPhone Number: {}\nAddress: {}\nMinor: {}".format(self.name, self.birthdate, self.phoneNumber, self.address, self.isMinor)
+    def createAccount(self, acctType):
+        # this should return True if account create successful else false
+        # SHould be able to create savings and checking, but not loans
+        return "NOT YET IMPLEMENTED"
+
+    def checkBalance(self, acct=None):
+        if acct == None:
+            #If not account is specified check balance for all accounts... or maybe promt the user
+            pass
+        elif acct == "Savings" or acct == 0:
+            pass
+        elif acct == "Checking" or acct == 1:
+            pass
+        elif acct == "Loan" or acct == 2:
+            pass
+        #return account balance based on input
+
+    def makePayment(self, ammt, acct):
+        #allows for making payments on loans ONLY
+        pass
