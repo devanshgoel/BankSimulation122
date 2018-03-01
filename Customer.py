@@ -41,7 +41,7 @@ class Customer(Person):
         Types of accounts open
         Initialized customer info
 
-        Does NOT return balances - see getBalance()
+        Does NOT return balances - see checkBalance()
         """
         return "Name: {}\nBirthdate: {}\nPhone Number: {}\nAddress: {}\nMinor: {}".format(self.name, self.birthdate, self.phoneNumber, self.address, self.isMinor)
     def createAccount(self, acctType):
