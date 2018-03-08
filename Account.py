@@ -57,7 +57,7 @@ class Account:
             self.__balance = newBalance
             return newBalance
         else:
-            return "Not enough funds, Current Balance: " + self.__balance
+            return "Not enough funds, Current Balance: " + str(self.__balance)
 
     def deposit(self, amount):
         """
