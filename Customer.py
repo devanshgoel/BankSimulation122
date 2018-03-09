@@ -3,7 +3,7 @@ from Savings import *
 from Checking import *
 
 class Customer(Person):
-    def __init__(self, name, birthdate, phoneNumber, address):
+    def __init__(self, name, birthdate, phoneNumber, address, ssn):
         """
         Summary line.
         Initializing the variables.
@@ -11,14 +11,16 @@ class Customer(Person):
         Parameters
         ----------
         name: str
-            name of the person
+            name of the customer
         birthdate: str
-            birthdate of the person
+            birthdate of the customer
             passed as MM/DD/YYYY
         phonenumber: int
-            phonenumber of the person
+            phonenumber of the customer
         address: str
-            address of the person
+            address of the customer
+        ssn: int
+            Social securtiy number of the customer
 
         Returns
         -------
@@ -27,6 +29,7 @@ class Customer(Person):
         """
         Person.__init__(self, name, birthdate, phoneNumber, address)
         self.isMinor = True if self.getAge() < 18 else False
+        self.ssn = ssn #What are we going to use this for? identifying loans?
         self.accounts = {"Savings": False, "Checking": False, "Loan": False} # this is just an easy way to keep track of what accounts are open
 
     def getInfo(self):
@@ -41,7 +44,6 @@ class Customer(Person):
         Returns
         -------
         Returns # of accounts open
-        #TODO: Types of accounts open
         Initialized customer info
 
         Does NOT return balances - see checkBalance()
@@ -75,7 +77,7 @@ class Customer(Person):
         try:
             return self.accounts[acct]
         except KeyError:
-            print("Non-Valid account type {} for doesExist check".format(acct))
+            print("Non-Valid account type {}".format(acct))
             return False
 
     def createAccount(self, acct, bal):
@@ -104,10 +106,16 @@ class Customer(Person):
             return False
 
         if acct == "Savings" or acct == 0 and self.accounts["Savings"]:
+            if bal < Savings.getMinBal():
+                print("You must open an account with a balance greater than or equal to ${}".format(Savings.getMinBal()))
+                return False
             self.savings = Savings(bal)
             self.accounts["Savings"] = True
             return True
         elif acct == "Checking" or acct == 1 and self.account["Checking"]:
+            if bal < Checking.getMinBal():
+                print("You must open an account with a balance greater than or equal to ${}".format(Checking.getMinBal()))
+                return False
             self.checking = Checking(bal)
             self.accounts["Checking"] = True
             return True
@@ -122,27 +130,53 @@ class Customer(Person):
 
     def checkBalance(self, acct=None):
         #TODO: return true and false and just print information since this is a interface class(it interfaces between classes
+        """
+        Summary:
+            Checks account balances and prints if they exist
+        Description:
+            Checks for account existance - if no accounts exists cancel or if the specific account doesnt exist cancel
+        Parameters
+        _________
+
+        acct: str
+            Either "Checking", "Savings", or "Loan" if left empty the user is prompted
+
+        Returns
+        _______
+        Boolean
+            True if account check succeeds false if not
+        """
         numAccts = 0
         for account in self.accounts:
             if self.accounts[account]:
                 numAccts += 1
 
         if numAccts == 0:
-            return "Please create an account first"
+            print("Please create an account first")
+            return False
 
         if acct == "Cancel" or acct == "x" or acct == -1:
-            return "Check cancelled"
-        elif self.accounts[acct]:
-            return "Your {} account balance is: {}".format(acct.lower(), self.savings.getBalance())
-        elif acct == "Checking" or acct == "Savings" or acct == "Loan":
-            return "Please create the {} account first".format(acct)
+            print("Check cancelled")
+            return False
+        elif self.__doesExist(acct): #use this method rather than just self.accounts[acct] to catch keyErrors
+            if acct == "Savings":
+                print("Your {} account balance is: {}".format(acct.lower(), self.savings.getBalance()))
+            elif acct == "Checking":
+                print("Your {} account balance is: {}".format(acct.lower(), self.checking.getBalance()))
+            elif acct == "Loan":
+                print("Your {} account balance is: {}".format(acct.lower(), self.loan.getBalance()))
+            return True
+        elif acct in self.accounts:
+            print("Please create the {} account first".format(acct))
+            return False
         else:
             acct = input("Please enter account type (Savings, Checking, or Loan): ")
-            return self.checkBalance(acct)
+            print(self.checkBalance(acct))
+            return False
 
     def askForLoan(self, managerId=0):
         #check for correct manager id before creating loan - or should this all be taken care of from the manager standpoint
-        pass
+        print("NOT YET IMPLEMENTED")
 
     def depositTo(self, acct, ammt):
         """
@@ -217,4 +251,5 @@ class Customer(Person):
 
     def makePayment(self, ammt):
         #allows for making payments on loans ONLY
-        pass
+        print("NOT YET IMPLEMENTED")
+
