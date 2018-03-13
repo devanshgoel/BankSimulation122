@@ -1,37 +1,32 @@
 from Account import *
-import datetime
 
 class Savings(Account):
     """Class definition for a savings account"""
-
-    __minBalance = 25 #Min balance in dollars
-    __interestRate = .01 #Intrest rate 
-    def __init__(self, startingBalance=0):
-        Account.__init__(self, startingBalance) # inistialize with the same vars a account
-        lastInterestUpdate = (datetime.date.day(), datetime.date.month(), datetime.date.year())
-
-    @classmethod
-    def getMinBal(self):
-        """Returns minimum account balance of type Int"""
-        return self.__minBalance
-
-    def intrest(self): # THis might not be right - we should discuss how to implement this and possible make a setBalance() method for account so we dont have to access hidden variables
-        if self.getBalance() >= 0:
-            self._Account__balance *= (1+self.__interestRate)
-            lastIntrestUpdate = datetime.date.today()
-            return True
+    
+    def __init__(self, startingBalance):
+        Account.__init__(self, startingBalance)
+        if startingBalance < 100:
+            self.__interestRate = 0 
         else:
-            print("You have a negative or zero balance - Interest not applied")
-            return False
+            __interestRate = .02 #Intrest rate 
+        __minBalance = 100
 
-    def addInterest(self, force=False):
-        pass # ignore this function for now
-        if force:
-            print("Forcefully updating intrest regardless of date")
-            intrest()
+    def __str__(self):
+        return 'Savings Account:\n   Current Balance: ${}\n   Interest Rate: {}%\n'.format(self._Account__balance, self.__interestRate)
+
+    def withdraw(self, amount):
+        confirm = input("Current Balance: ${}\nWould you like to withdraw ${}?(Y/N)\n".format(self._Account__balance, amount))
+        if confirm == "Y" or confirm == "y":
+            if self._Account__minBalance >= (amount):
+                newBalance = self._Account__balance - (amount)
+                self._Account__balance = newBalance
+                return newBalance
+            else:
+                return "Not enough funds!\n Current Balance: ${} | Minimum Balance: ${}".format(self._Account__balance, self._Account__minBalance)
+        elif confirm == "N" or confirm == "n":
+            return "Request Cancelled"
         else:
-            now = (datetime.date.day(), datetime.date.month(), datetime.date.year())
-            if now[0] > lastInterestUpdate[0]: # make this work better - check for month/year changes
-                print("Updating intrest")
+            self.withdraw(self, amount)
 
-
+    __repr__ = __str__
+ 

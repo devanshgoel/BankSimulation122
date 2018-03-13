@@ -1,60 +1,29 @@
 import datetime
 
-
 class Person:
     """ Abstract person class for defining similarity between both employees and customers """
-    def __init__(self, name, birthdate, phonenumber, address):
-        """
-        Summary line.
-        Initializing the variables.
-
-        Parameters
-        ----------
-        name: str
-            name of the person
-        birthdate: str
-            birthdate of the person
-            passed as MM/DD/YYYY
-        phonenumber: int
-            phonenumber of the person
-        address: str
-            address of the person
-
-        Returns
-        -------
-        Doesn't return anything
-
-        """
+    def __init__(self, name, birthdate, phone, address):
         self.name = name
-        self.birthdate = birthdate
-        self.phoneNumber = phonenumber
-        self.address = address
-
+        self.__birthdate = birthdate
+        self.__phone = phone
+        self.__address = address
+        
     def getInfo(self):
         """
-        Summary line.
-        It is an abstract method that returns the info of the person.
+        abstract method that returns the info of the person
+
         """
         raise NotImplementedError("Subclass must implement abstract method")
-
+        
     def getAge(self):
         """
-        Summary line.
         takes birthdate and returns age based off of current datetime
-
-        Parameters
-        ----------
-
-        Returns
-        -------
-        int
-            age of the person
 
         """
         today=datetime.date.today()
-        month, day, year = self.birthdate.split("/")
+        month, day, year = self.__birthdate.split("/")
         age = today.year - int(year)
         if (today.month, today.day) < (int(month), int(day)):
             age -=1
-        return age
 
+        return age
